@@ -1,0 +1,7 @@
+[package]
+name = "flow-rust"
+version = "0.1.0"
+authors = ["Adrian Ottiker <adrian@ottiker.com>"]
+
+[dependencies]
+lru_time_cache = "0.5.0"
