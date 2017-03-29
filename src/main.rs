@@ -1,9 +1,8 @@
-extern crate lru_time_cache;
+extern crate flow_rust;
 
 use std::env;
-use std::path::PathBuf;
 use std::fs::canonicalize;
-use ::lru_time_cache::LruCache;
+use flow_rust::{Adapter, Cache, Sequence, Function};
 
 fn main() {
 
@@ -17,27 +16,12 @@ fn main() {
     let base = canonicalize(&location).expect(&error_prefix);
     env::set_current_dir(&base).expect(&error_prefix);
 
-    // Cache
-    let lru_cache = LruCache::<u8, String>::with_capacity(10);
-    struct Cache {}
-    impl Cache {
-        fn get() {
-            println!("Cache get called!");
-        }
-    }
-
-    // Adapter
-    struct Adapter {
-        cache: Cache
-    }
-    impl Adapter {
-        fn seq (file: &PathBuf) {
-            println!("Sequence path: {:?}", file);
-            Adapter::cache::get();
-        }
-    }
-
-    Adapter::seq(&base);
+    let adapter = Adapter::new(2);
+    adapter.set();
+    adapter.get();
+    adapter.del();
+    adapter.seq();
+    adapter.fnc();
 
     println!(
         "Sequence ID: {}\nSequence Location: {:?}",
