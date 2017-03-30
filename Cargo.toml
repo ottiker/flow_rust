@@ -5,3 +5,6 @@ authors = ["Adrian Ottiker <adrian@ottiker.com>"]
 
 [dependencies]
 lru = "0.1.4"
+
+[dependencies.flow]
+path = "../flow.rs"
