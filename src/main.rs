@@ -1,5 +1,7 @@
+extern crate flow;
 extern crate flow_rust;
 
+use flow::flow;
 use std::env;
 use std::fs::canonicalize;
 use flow_rust::{Adapter, Cache, Sequence, Function};
@@ -22,6 +24,11 @@ fn main() {
     adapter.del();
     adapter.seq();
     adapter.fnc();
+
+	let test_sequence_id = "testSequenceId".to_string();
+	let test_role = "testRole".to_string();
+	let e = flow(&adapter)(&test_sequence_id, &test_role);
+	println!("flow event: {}, {}", e.sequence, e.role);
 
     println!(
         "Sequence ID: {}\nSequence Location: {:?}",
