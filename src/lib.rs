@@ -1,54 +1,47 @@
-pub struct Adapter {
-    _lru_size: usize
+extern crate flow;
+
+use flow::sequence::{Sequence, State, Handler};
+
+//pub struct Adapter {
+//	_lru_size: usize
+//}
+
+pub trait Factory {
+	fn new(lru_sisce: usize) -> Box<Adapter>;
 }
 
-impl Adapter {
-    pub fn new(lru_size: usize) -> Adapter {
+impl Factory for flow::Adapter {
+    fn new<'a>(lru_size: usize) -> Box<Adapter> {
         println!("New adapter called, {}", lru_size);
-        Adapter {
+        Box::new(Adapter {
             _lru_size: lru_size
-        }
+        })
     }
 }
-pub trait Cache {
-    fn set (&self);
-    fn get (&self);
-    fn del (&self);
-}
 
-pub trait Sequence {
-    fn seq (&self);
-}
+impl flow::TAdapter for flow::Adapter {
 
-pub trait Function {
-    fn fnc (&self);
-}
-
-// TODO use existing LRU cache, problem:
-// struc Adapter {cache: LruCache</*How to get the types?*/>}
-impl Cache for Adapter {
-    fn set (&self) {
+	// TODO use existing LRU cache, problem:
+	// struc Adapter {cache: LruCache</*How to get the types?*/>}
+	fn set<'a, T>(key: &str, val: &'a T) -> &'a T {
         println!("Cache set, called!");
+		val
     }
-    fn get (&self) {
+    fn get<'a>(key: &str) {
         println!("Cache get, called!");
     }
-    fn del (&self) {
+    fn del<'a>(key: &str) {
         println!("Cache del, called!");
     }
-}
 
-// TODO get sequence info from FS and SAFE
-impl Sequence for Adapter {
-    fn seq (&self) {
+	// TODO get sequence info from FS and SAFE
+	fn seq(sequence_id: &str) {
         println!("Adapter seq, called!");
-    }
-}
+    }	
 
-// TODO how to get handlers dynamically from the fs or a network?
-// pre-compiled? the registry should handle such things...
-impl Function for Adapter {
-    fn fnc (&self) {
+	// TODO how to get handlers dynamically from the fs or a network?
+	// pre-compiled? the registry should handle such things...
+	fn fnc(function_id: &str) {
         println!("Adapter fnc, called!");
     }
 }
