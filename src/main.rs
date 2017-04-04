@@ -20,7 +20,7 @@ fn main() {
 
 	let test_sequence_id = "testSequenceId";
 	let test_role = "testRole";
-	let e = Flow(FsAdapter::new(2))(&test_sequence_id, &test_role);
+	let e = Flow(&FsAdapter::new(2))(&test_sequence_id, &test_role);
 	println!("flow event: {}, {}", e.sequence, e.role);
 
     println!(
