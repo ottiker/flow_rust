@@ -4,8 +4,7 @@ extern crate flow_rust;
 use flow::Flow;
 use std::env;
 use std::fs::canonicalize;
-use flow_rust::Adapter;
-use flow_rust::Factory;
+use flow_rust::FsAdapter;
 
 fn main() {
 
@@ -21,13 +20,8 @@ fn main() {
 
 	let test_sequence_id = "testSequenceId";
 	let test_role = "testRole";
-
-	let adapter = Adapter::new(2);
-	//adapter.get(&adapter);
-	let flow = Flow(&adapter);
-
-	//let e = flow(&test_sequence_id, &test_role);
-	//println!("flow event: {}, {}", e.sequence, e.role);
+	let e = Flow(FsAdapter::new(2))(&test_sequence_id, &test_role);
+	println!("flow event: {}, {}", e.sequence, e.role);
 
     println!(
         "Sequence ID: {}\nSequence Location: {:?}",
