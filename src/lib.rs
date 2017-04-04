@@ -3,10 +3,6 @@ extern crate flow;
 use flow::Adapter;
 use flow::sequence::{Sequence, State, Handler};
 
-//pub struct FsAdapter {
-//	_lru_size: usize
-//}
-
 pub struct FsAdapter {
 	_lru_size: usize
 }
