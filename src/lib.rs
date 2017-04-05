@@ -9,14 +9,13 @@ pub struct FsAdapter<'a> {
 
 impl<'a> FsAdapter<'a> {
     pub fn new(lru_size: &'a usize) -> Box<FsAdapter<'a>> {
-        println!("New adapter called, {}", lru_size);
 		Box::new(FsAdapter {
             _lru_size: lru_size
         })
     }
 }
 
-impl<'a> Adapter<'a, FsAdapter<'a>> for FsAdapter<'a> {
+impl<'a> Adapter<FsAdapter<'a>> for FsAdapter<'a> {
 
 	// TODO use existing LRU cache, problem:
 	// struc FsAdapter {cache: LruCache</*How to get the types?*/>}
