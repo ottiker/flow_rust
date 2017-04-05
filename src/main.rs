@@ -1,9 +1,9 @@
 extern crate flow;
 extern crate flow_rust;
 
-use flow::Flow;
 use std::env;
 use std::fs::canonicalize;
+use flow::Flow;
 use flow_rust::FsAdapter;
 
 fn main() {
@@ -19,13 +19,6 @@ fn main() {
     let base = canonicalize(&location).expect(&error_prefix);
     env::set_current_dir(&base).expect(&error_prefix);
 
-	let lru_size:usize = 2;
-	let adapter = FsAdapter::new(&lru_size);
-	let e = Flow(&adapter)(&sequence_id, &default_role);
-	println!("flow event: {}, {}", e.sequence, e.role);
-
-    println!(
-        "Sequence ID: {}\nSequence Location: {:?}",
-        &sequence_id, env::current_dir().unwrap()
-    );
+	// init flow with an adapter and emit first sequence
+	Flow(FsAdapter::new(2))(&sequence_id, &default_role);
 }
