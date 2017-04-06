@@ -1,25 +1,26 @@
 extern crate flow;
-extern crate lru_cache;
+extern crate lru;
 
-use lru_cache::LruCache;
 use flow::Adapter;
 use flow::sequence::{Sequence, State, Handler};
+use lru::LruCache;
 use std::hash::Hash;
-use std::cmp::Eq;
+use std::cmp::{Eq, PartialEq};
+use std::cell::RefCell;
 
-pub struct FsAdapter<K: Eq + Hash, V> {
-	_cache: LruCache<K, V>
+pub struct FsAdapter<K, V> {
+	_cache: RefCell<lru::LruCache<K, V>>
 }
 
 impl<K: Eq + Hash, V> FsAdapter<K, V> {
     pub fn new(lru_size: usize) -> Box<FsAdapter<K, V>> {
 		Box::new(FsAdapter {
-            _cache: LruCache::new(lru_size)
-        })
+			_cache: RefCell::new(LruCache::new(lru_size))
+		})
     }
 }
 
-impl<K: Eq + Hash, V> Adapter<FsAdapter<K, V>> for FsAdapter<K, V> {
+impl<K, V> Adapter<FsAdapter<K, V>> for FsAdapter<K, V> {
 
 	// TODO use existing LRU cache, problem:
 	// struc FsAdapter {cache: LruCache</*How to get the types?*/>}
@@ -28,6 +29,7 @@ impl<K: Eq + Hash, V> Adapter<FsAdapter<K, V>> for FsAdapter<K, V> {
 		val
     }
     fn get(&self, key: &str) {
+		let c = self._cache.borrow();
         println!("Cache get, called!");
     }
     fn del(&self, key: &str) {
