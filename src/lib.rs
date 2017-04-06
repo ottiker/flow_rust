@@ -9,7 +9,7 @@ use std::cmp::{Eq, PartialEq};
 use std::cell::RefCell;
 
 pub struct FsAdapter<K, V> {
-	_cache: RefCell<lru::LruCache<K, V>>
+	_cache: RefCell<LruCache<K, V>>
 }
 
 impl<K: Eq + Hash, V> FsAdapter<K, V> {
@@ -20,7 +20,7 @@ impl<K: Eq + Hash, V> FsAdapter<K, V> {
     }
 }
 
-impl<K, V> Adapter<FsAdapter<K, V>> for FsAdapter<K, V> {
+impl<K: Eq + Hash, V> Adapter<FsAdapter<K, V>> for FsAdapter<K, V> {
 
 	// TODO use existing LRU cache, problem:
 	// struc FsAdapter {cache: LruCache</*How to get the types?*/>}
@@ -29,7 +29,9 @@ impl<K, V> Adapter<FsAdapter<K, V>> for FsAdapter<K, V> {
 		val
     }
     fn get(&self, key: &str) {
-		let c = self._cache.borrow();
+		let mut c = self._cache.borrow();
+		c.put(1, "a");
+		//c.get(1);
         println!("Cache get, called!");
     }
     fn del(&self, key: &str) {
