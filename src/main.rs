@@ -1,5 +1,6 @@
 extern crate flow;
 extern crate flow_rust;
+extern crate lru;
 
 use std::env;
 use std::fs::canonicalize;
@@ -20,5 +21,6 @@ fn main() {
     env::set_current_dir(&base).expect(&error_prefix);
 
 	// init flow with an adapter and emit first sequence
-	Flow(FsAdapter::new(2))(&sequence_id, &default_role);
+	let adapter: Box<FsAdapter<isize, &str>> = FsAdapter::new(2);
+	Flow(adapter)(&sequence_id, &default_role);
 }
