@@ -4,8 +4,8 @@ extern crate lru;
 
 use std::env;
 use std::fs::canonicalize;
-use flow::{Flow, Adapter};
-use flow_rust::FsAdapter;
+use flow::flow;
+use flow_rust::{factory, FsAdapter};
 use std::collections::HashMap;
 
 fn main() {
@@ -22,6 +22,6 @@ fn main() {
     env::set_current_dir(&base).expect(&error_prefix);
 
 	// init flow with an adapter and emit first sequence
-	let adapter: Box<FsAdapter<HashMap<&str, isize>>> = FsAdapter::new(2);
-	Flow(adapter)(&sequence_id, &default_role);
+	let adapter: Box<FsAdapter<HashMap<&str, isize>>> = factory();
+	flow(adapter)(&sequence_id, &default_role);
 }
