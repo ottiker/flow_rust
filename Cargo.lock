@@ -1,19 +1,21 @@
-[root]
+[[package]]
+name = "flow"
+version = "0.1.0"
+dependencies = [
+ "futures 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "flow-rust"
 version = "0.1.0"
 dependencies = [
  "flow 0.1.0",
- "lru 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
-name = "flow"
-version = "0.1.0"
-
-[[package]]
-name = "lru"
-version = "0.1.4"
+name = "futures"
+version = "0.1.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [metadata]
-"checksum lru 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "4da4f241a23d30b58ee73a220040947cfa75ecc0632e01d62d042261f3c3093a"
+"checksum futures 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)" = "118b49cac82e04121117cbd3121ede3147e885627d82c4546b87c702debb90c1"
